@@ -12,13 +12,13 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        MyProcotol myProcotol = (MyProcotol)msg;
+        MyProcotol myProcotol = (MyProcotol) msg;
         System.out.println("服务端收到客户端的消息 : " + myProcotol.toString());
         String resp = "已经收到客户端的消息，";
         MyProcotol respPro = new MyProcotol();
-        respPro.setHeader((short) (Constant.HEADER & 0xff));
+        respPro.setHeader(Constant.HEADER);
         respPro.setVersion(Constant.VERSION);
-        respPro.setCmd(MethodEnum.CLIENT_DATA_SAVE_IN_DB.getCode());
+        respPro.setCmd(myProcotol.getCmd());
         respPro.setCode(Constant.CODE);
         respPro.setEncryp((byte) EncrypEnum.code);
         respPro.setContentLength(resp.length());

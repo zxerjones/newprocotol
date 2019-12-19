@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProtocolDAO">
+    <insert id="insertlist">
+        insert into student (uid,name,age,des)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.uid}, #{item.name}, #{item.age}, #{item.des})
+        </foreach>
+    </insert>
+</mapper>

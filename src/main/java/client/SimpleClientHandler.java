@@ -8,12 +8,15 @@ import util.Constant;
 import util.EncrypEnum;
 import util.MethodEnum;
 
+
+/**
+ * 客户端发送请求，从服务器拉取数据 cmd=0x11
+ */
 public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         String content = "I an client";
-        int contentLength = content.length();
         MyProcotol procotol = new MyProcotol();
         procotol.setHeader(Constant.HEADER);
         procotol.setVersion(Constant.VERSION);
@@ -21,7 +24,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
         procotol.setCode(Constant.CODE);
         procotol.setEncryp((byte) EncrypEnum.code);
         procotol.setContent(content);
-        procotol.setContentLength(contentLength);
+        procotol.setContentLength(content.length());
         ctx.writeAndFlush(procotol);
     }
 
