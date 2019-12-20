@@ -3,12 +3,14 @@ package server;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import protocol.MyProcotol;
+import service.ProcotolService;
 import util.Constant;
 import util.EncrypEnum;
 import util.MethodEnum;
 
 public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
 
+    private ProcotolService procotolService = new ProcotolService();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -22,8 +24,22 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
         respPro.setCode(Constant.CODE);
         respPro.setEncryp((byte) EncrypEnum.code);
         respPro.setContentLength(resp.length());
+
+        // 做具体的业务处理，保存数据或者向客户端推送数据
+        String response = buildRespContent(myProcotol);
+
         respPro.setContent(resp);
         ctx.writeAndFlush(respPro);
+    }
+
+
+    /**
+     * 模拟和数据库交互
+     * @param myProcotol
+     * @return
+     */
+    private String buildRespContent(MyProcotol myProcotol) {
+        return procotolService.buildRespContent(myProcotol);
     }
 
     @Override
