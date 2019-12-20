@@ -1,4 +1,4 @@
-package util;
+package constant;
 
 public class Constant {
     public static final short HEADER = 0x82;

@@ -1,18 +1,16 @@
 package client;
 
 import com.alibaba.fastjson.JSON;
+import constant.Constant;
+import constant.EncrypEnum;
+import constant.MethodEnum;
 import entity.Student;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
-import org.w3c.dom.ls.LSException;
 import protocol.MyProcotol;
-import util.Constant;
-import util.EncrypEnum;
-import util.MethodEnum;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,7 +42,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
     private List<Student> buildContent() {
         String baseName = "zxerjones";
         List<Student> list = new ArrayList<>();
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 2; i++) {
             Student student = new Student(getUid(), baseName + i, 24 + i, "coder " + i);
             list.add(student);
         }
@@ -59,9 +57,6 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    public static void main(String[] args) {
-        System.out.println(UUID.randomUUID().toString().replaceAll("-","").length());
-    }
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         MyProcotol procotol = (MyProcotol) msg;

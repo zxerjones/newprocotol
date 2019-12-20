@@ -8,4 +8,9 @@
             (#{item.uid}, #{item.name}, #{item.age}, #{item.des})
         </foreach>
     </insert>
+
+    <insert id="insert" parameterType="entity.Student">
+        insert into student (uid,name,age,des)
+        values (#{uid}, #{name}, #{age}, #{des})
+    </insert>
 </mapper>

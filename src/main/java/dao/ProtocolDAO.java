@@ -15,4 +15,6 @@ public interface ProtocolDAO {
     int insertlist(List<Student> list);
 
     List<MyProcotol> search();
+
+    void insert(Student e);
 }

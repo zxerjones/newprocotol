@@ -1,0 +1,9 @@
+create table student(
+	id int PRIMARY key auto_increment ,
+	uid varchar(32) comment '学生编号',
+	name varchar(15) comment '学生姓名',
+	age int(10) COMMENT '学生年龄',
+	des varchar(255) comment '描述'
+);
+alter table student add UNIQUE(uid);
+alter table student add index idx_name(name, age);

@@ -1,21 +1,37 @@
 package protocol;
 
 
+import com.alibaba.fastjson.JSONObject;
+
+import java.io.Serializable;
+
 /**
  * 协议定义
  */
 
-public class MyProcotol {
+public class MyProcotol implements Serializable {
 
     private short header;
     private byte version;
     private int cmd;
     private int code;
-    private byte encryp;
+    private short encryp;
     private long contentLength;
     private String content;
 
-    public MyProcotol(short header, byte version, byte cmd, int code, byte encryp, long contentLength, String content) {
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public short getEncryp() {
+        return encryp;
+    }
+
+    public void setEncryp(short encryp) {
+        this.encryp = encryp;
+    }
+
+    public MyProcotol(short header, byte version, byte cmd, int code, short encryp, long contentLength, String content) {
         this.header = header;
         this.version = version;
         this.cmd = cmd;
@@ -70,13 +86,6 @@ public class MyProcotol {
         this.code = code;
     }
 
-    public byte getEncryp() {
-        return encryp;
-    }
-
-    public void setEncryp(byte encryp) {
-        this.encryp = encryp;
-    }
 
     public long getContentLength() {
         return contentLength;
