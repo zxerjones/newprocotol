@@ -27,11 +27,13 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
         procotol.setVersion(Constant.VERSION);
         procotol.setCmd(MethodEnum.CLIENT_DATA_SAVE_IN_DB.getCode());
         procotol.setCode(Constant.CODE);
-        procotol.setEncryp((byte) EncrypEnum.code);
+        procotol.setEncryp(EncrypEnum.code);
 
         String content = JSON.toJSONString(buildContent());
         procotol.setContent(content);
         procotol.setContentLength(content.length());
+        System.out.println(content.length());
+        System.out.println(content);
         ctx.writeAndFlush(procotol);
     }
 
@@ -42,7 +44,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
     private List<Student> buildContent() {
         String baseName = "zxerjones";
         List<Student> list = new ArrayList<>();
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 100; i++) {
             Student student = new Student(getUid(), baseName + i, 24 + i, "coder " + i);
             list.add(student);
         }

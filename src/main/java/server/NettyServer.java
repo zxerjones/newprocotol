@@ -4,6 +4,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.FixedRecvByteBufAllocator;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
@@ -23,9 +24,10 @@ public class NettyServer {
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new ServerHandler())
                     .option(ChannelOption.SO_BACKLOG, 1024) // 设置tcp缓冲区
-                    .option(ChannelOption.SO_KEEPALIVE, true);
+                    .option(ChannelOption.SO_RCVBUF, 1024*1024)	// 设置接受数据的缓存大小
+                    .option(ChannelOption.SO_KEEPALIVE, true)
+                    .childHandler(new ServerHandler());
             // 绑定端口，同步等待绑定成功
             ChannelFuture f = b.bind(8888).sync();
             System.out.println("server start ok.....");

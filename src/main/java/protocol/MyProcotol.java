@@ -31,7 +31,7 @@ public class MyProcotol implements Serializable {
         this.encryp = encryp;
     }
 
-    public MyProcotol(short header, byte version, byte cmd, int code, short encryp, long contentLength, String content) {
+    public MyProcotol(short header, byte version, int cmd, int code, short encryp, long contentLength, String content) {
         this.header = header;
         this.version = version;
         this.cmd = cmd;

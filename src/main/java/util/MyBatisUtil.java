@@ -35,9 +35,8 @@ public class MyBatisUtil {
     }
 
     public static void main(String[] args) {
-        String str = "[{\"age\":24,\"des\":\"coder 0\",\"id\":0,\"name\":\"zxerjones0\",\"uid\":\"0ddc06e5873045de9fbfd07694210aa3\"},{\"age\":25,\"des\":\"coder 1\",\"id\":0,\"name\":\"zxerjones1\",\"uid\":\"ae94691c386147e0a759a12e4100df78\"}]";
-        Student student = JSON.parseObject(str, Student.class);
-        System.out.println(student);
+       long header = 140;
+        System.out.println(Long.toHexString(140));
     }
     /**
      * 关闭资源

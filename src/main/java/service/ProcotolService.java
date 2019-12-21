@@ -58,7 +58,6 @@ public class ProcotolService {
      * 记录保存失败的数据
      */
     public String buildResponse(String content) {
-
         List<Student> list = JSON.parseArray(content, Student.class);
 
         ProtocolDAO protocolDAO = threadLocal.get().getMapper(ProtocolDAO.class);
