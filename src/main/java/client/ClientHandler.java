@@ -20,8 +20,8 @@ public class ClientHandler extends ChannelInitializer<SocketChannel> {
         ch.pipeline().addLast(new MyEncoder());
         ch.pipeline().addLast(new MyDecoder());
 //        ch.pipeline().addLast(new ProcotolDecoder(2048, 13, 4));
-        ch.pipeline().addLast(new LineBasedFrameDecoder(10240));
-        ch.pipeline().addLast(new StringDecoder(Charset.defaultCharset()));
+//        ch.pipeline().addLast(new LineBasedFrameDecoder(10240));
+//        ch.pipeline().addLast(new StringDecoder(Charset.defaultCharset()));
         // 处理网络IO
         ch.pipeline().addLast(new SimpleClientHandler());
     }

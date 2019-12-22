@@ -18,11 +18,11 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("server receive msg from client : " + myProcotol.toString());
         String resp = "I am ready receive msg, thank you...";
         MyProcotol respPro = new MyProcotol();
-        respPro.setHeader(Constant.HEADER);
-        respPro.setVersion(Constant.VERSION);
+        respPro.setHeader(myProcotol.getHeader());
+        respPro.setVersion(myProcotol.getVersion());
         respPro.setCmd(myProcotol.getCmd());
-        respPro.setCode(Constant.CODE);
-        respPro.setEncryp((byte) EncrypEnum.code);
+        respPro.setCode(myProcotol.getCode());
+        respPro.setEncryp(EncrypEnum.code);
 
         // 做具体的业务处理，保存数据或者向客户端推送数据
         String response = doWorkByCmd(myProcotol);

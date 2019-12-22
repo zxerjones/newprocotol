@@ -10,31 +10,32 @@ import java.nio.charset.Charset;
 public class ProcotolDecoder extends LengthFieldBasedFrameDecoder {
 
 
-    public ProcotolDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) {
-        super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
+    public ProcotolDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip) {
+        super(maxFrameLength, lengthFieldOffset, lengthFieldLength, lengthAdjustment, initialBytesToStrip);
     }
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        in = (ByteBuf) super.decode(ctx, in);
-        if (in == null) {
-            return new MyProcotol();
-        }
-
-        short header = in.readShort();
-        byte version = in.readByte();
-        int cmd = in.readInt();
-        int code = in.readInt();
-        short encrpy = in.readShort();
-        long length = in.readLong();
-
-        if (in.readableBytes() != length) {
-            return null;
-        }
-
-        byte[]  contentBytes = new byte[in.readableBytes()];
-        in.readBytes(contentBytes);
-
-        return new MyProcotol(header, version, cmd, code, encrpy, length, new String(contentBytes, Charset.defaultCharset()));
+        return super.decode(ctx, in);
+//        System.out.println(super.decode(ctx,in));
+//        if (in == null) {
+//            return new MyProcotol();
+//        }
+//
+//        short header = in.readShort();
+//        byte version = in.readByte();
+//        int cmd = in.readInt();
+//        int code = in.readInt();
+//        short encrpy = in.readShort();
+//        long length = in.readLong();
+//
+//        byte[] bytes = new byte[in.readableBytes()];
+//        in.readBytes(bytes);
+//
+//
+//        byte[]  contentBytes = new byte[in.readableBytes()];
+//        in.readBytes(contentBytes);
+//
+//        return new MyProcotol(header, version, cmd, code, encrpy, length, new String(contentBytes, Charset.defaultCharset()));
     }
 }

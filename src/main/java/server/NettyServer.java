@@ -24,8 +24,8 @@ public class NettyServer {
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .option(ChannelOption.SO_BACKLOG, 1024) // 设置tcp缓冲区
-                    .option(ChannelOption.SO_RCVBUF, 1024*1024)	// 设置接受数据的缓存大小
+                    .option(ChannelOption.SO_BACKLOG, 20480) // 设置tcp缓冲区
+                    .option(ChannelOption.SO_RCVBUF, 1024*1024*64)	// 设置接受数据的缓存大小
                     .option(ChannelOption.SO_KEEPALIVE, true)
                     .childHandler(new ServerHandler());
             // 绑定端口，同步等待绑定成功

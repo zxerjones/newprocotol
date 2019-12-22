@@ -7,6 +7,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import protocol.MyProcotol;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class MyEncoder extends MessageToByteEncoder<MyProcotol> {
     protected void encode(ChannelHandlerContext ctx, MyProcotol msg, ByteBuf out) throws Exception {
@@ -20,8 +21,4 @@ public class MyEncoder extends MessageToByteEncoder<MyProcotol> {
         out.writeBytes(msg.getContent().getBytes(Charset.defaultCharset()));
     }
 
-    @Override
-    protected ByteBuf allocateBuffer(ChannelHandlerContext ctx, MyProcotol msg, boolean preferDirect) throws Exception {
-        return Unpooled.buffer(1024*1024);
-    }
 }

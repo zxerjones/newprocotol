@@ -31,7 +31,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 
         String content = JSON.toJSONString(buildContent());
         procotol.setContent(content);
-        procotol.setContentLength(content.length());
+        procotol.setContentLength(content.getBytes().length);
         System.out.println(content.length());
         System.out.println(content);
         ctx.writeAndFlush(procotol);

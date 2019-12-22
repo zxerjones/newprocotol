@@ -21,7 +21,7 @@ public class NettyClient {
             b.group(group)
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.TCP_NODELAY, true)
-                    .option(ChannelOption.SO_SNDBUF, 64 * 1024)    // 设置发送数据的缓存大小
+                    .option(ChannelOption.SO_SNDBUF, 1024 * 1024 * 64)    // 设置发送数据的缓存大小
 //                    .option(ChannelOption.SO_BACKLOG, 10240)
                     .option(ChannelOption.RCVBUF_ALLOCATOR, new FixedRecvByteBufAllocator(1024*1024))
                     .handler(new ClientHandler());
