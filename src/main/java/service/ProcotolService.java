@@ -34,24 +34,15 @@ public class ProcotolService {
      */
     private ThreadLocal<SqlSession> threadLocal = new ThreadLocal<>();
 
+    /**
+     * DAO
+     */
+    ProtocolDAO protocolDAO;
+
     public ProcotolService() {
         failData = new CopyOnWriteArrayList();
         threadLocal.set(MyBatisUtil.getSqlSession());
-    }
-
-    /**
-     * 构建response
-     * @param
-     * @return
-     */
-    public String buildRespContent(String content) {
-        List<Student> list = JSON.parseObject(content, List.class);
-        SqlSession sqlSession = getSqlSession();
-        ProtocolDAO protocolDAO = sqlSession.getMapper(ProtocolDAO.class);
-        if (list.size() != 0) {
-            protocolDAO.insertlist(list);
-        }
-        return null;
+        protocolDAO = threadLocal.get().getMapper(ProtocolDAO.class);
     }
 
     /**
@@ -60,7 +51,6 @@ public class ProcotolService {
     public String buildResponse(String content) {
         List<Student> list = JSON.parseArray(content, Student.class);
 
-        ProtocolDAO protocolDAO = threadLocal.get().getMapper(ProtocolDAO.class);
         failData = list.stream().map(e -> {
             try {
                 protocolDAO.insert(e);
@@ -73,33 +63,14 @@ public class ProcotolService {
         }).collect(Collectors.toList());
         // 关闭sqlsession
         MyBatisUtil.close(threadLocal.get());
-        threadLocal.remove();
         return JSON.toJSONString(failData);
     }
 
-    /**
+    /** cmd=0x12时
      * 查找数据，发送给客户端
      */
     public String searchData() {
-        return null;
-    }
-
-
-    /**
-     *
-     */
-    private SqlSession getSqlSession() {
-        String resource = "mybatis-config.xml";
-        SqlSessionFactory sqlSessionFactory = null;
-        InputStream inputStream = null;
-        try {
-            inputStream = Resources.getResourceAsStream(resource);
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sqlSessionFactory.openSession();
+        List<Student> list = protocolDAO.selectList();
+        return JSON.toJSONString(list);
     }
 }

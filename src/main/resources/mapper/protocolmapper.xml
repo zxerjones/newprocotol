@@ -13,4 +13,8 @@
         insert into student (uid,name,age,des)
         values (#{uid}, #{name}, #{age}, #{des})
     </insert>
+
+    <select id="selectList" parameterType="entity.Student">
+        select * from student limit 100
+    </select>
 </mapper>

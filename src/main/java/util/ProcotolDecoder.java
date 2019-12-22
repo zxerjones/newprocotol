@@ -10,8 +10,8 @@ import java.nio.charset.Charset;
 public class ProcotolDecoder extends LengthFieldBasedFrameDecoder {
 
 
-    public ProcotolDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip) {
-        super(maxFrameLength, lengthFieldOffset, lengthFieldLength, lengthAdjustment, initialBytesToStrip);
+    public ProcotolDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) {
+        super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
     }
 
     @Override

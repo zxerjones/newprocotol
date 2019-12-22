@@ -19,6 +19,7 @@ public class ClientHandler extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline().addLast(new MyEncoder());
         ch.pipeline().addLast(new MyDecoder());
+        ch.pipeline().addLast(new ProcotolDecoder(10240, 13, 8));
 //        ch.pipeline().addLast(new ProcotolDecoder(2048, 13, 4));
 //        ch.pipeline().addLast(new LineBasedFrameDecoder(10240));
 //        ch.pipeline().addLast(new StringDecoder(Charset.defaultCharset()));

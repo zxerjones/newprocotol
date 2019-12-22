@@ -20,13 +20,11 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         // 添加自定义协议编码工具
         ch.pipeline().addLast(new MyEncoder());
-        ch.pipeline().addLast(new ProcotolDecoder(10240, 13, 8, 0, 13));
+
+        // 解决发送sjon不完整的问题
+        ch.pipeline().addLast(new ProcotolDecoder(10240, 13, 8));
         ch.pipeline().addLast(new MyDecoder());
 //        ch.pipeline().addLast(new MyDecoder());
-        // 解决发送不完整json问题
-//        ch.pipeline().addLast(new ProcotolDecoder(102400, 13, 8));
-//        ch.pipeline().addLast(new LineBasedFrameDecoder(10240));
-//        ch.pipeline().addLast(new StringDecoder(Charset.defaultCharset()));
         // 处理网络IO
         ch.pipeline().addLast(new SimpleServerHandler());
     }

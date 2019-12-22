@@ -16,7 +16,6 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         MyProcotol myProcotol = (MyProcotol) msg;
         System.out.println("server receive msg from client : " + myProcotol.toString());
-        String resp = "I am ready receive msg, thank you...";
         MyProcotol respPro = new MyProcotol();
         respPro.setHeader(myProcotol.getHeader());
         respPro.setVersion(myProcotol.getVersion());
@@ -27,9 +26,9 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
         // 做具体的业务处理，保存数据或者向客户端推送数据
         String response = doWorkByCmd(myProcotol);
 
-        respPro.setContentLength(resp.length());
-        respPro.setContent(resp);
-        ctx.writeAndFlush(respPro);
+        respPro.setContentLength(response.getBytes().length);
+        respPro.setContent(response);
+        ctx.writeAndFlush(response);
     }
 
     /**
@@ -50,6 +49,8 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
         if (MethodEnum.CLIENT_DATA_SAVE_IN_DB.getCode() == myProcotol.getCmd()) {
             return saveResult(myProcotol.getContent());
         }
+
+        // 服务端数据发送给客户
         if (MethodEnum.SERVER_DATA_TO_CLIENT.getCode() == myProcotol.getCmd()) {
             return sendResult();
         }

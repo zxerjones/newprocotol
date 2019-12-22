@@ -17,4 +17,6 @@ public interface ProtocolDAO {
     List<MyProcotol> search();
 
     void insert(Student e);
+
+    List<Student> selectList();
 }
