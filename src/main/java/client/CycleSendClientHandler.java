@@ -33,10 +33,14 @@ public class CycleSendClientHandler extends ChannelInboundHandlerAdapter {
         MyProcotol myProcotol = (MyProcotol) msg;
 
         //  收到握手请求后创建定时任务
-        if (myProcotol.getCmd() == MethodEnum.SHAKE_HAND.getCode()) {
-            channelFuture = threadPoolTaskScheduler.scheduleAtFixedRate(() -> {
-                System.out.println("client send heart beat to server : --- > ");
-            }, 0, 5000, TimeUnit.SECONDS);
+        if (myProcotol.getCmd() == MethodEnum.SHAKE_HEAD_RESP.getCode()) {
+//            channelFuture = threadPoolTaskScheduler.scheduleAtFixedRate(() -> {
+//                System.out.println("client send heart beat to server : --- > " + myProcotol.toString());
+//                ctx.writeAndFlush(buildProcotol());
+//            }, 0, 5000, TimeUnit.SECONDS);
+            channelFuture = ctx.executor().scheduleAtFixedRate(() -> {
+                        System.out.println("client send heat beat to server : ---> "+ myProcotol.toString());
+                    }, 0, 5000, TimeUnit.MILLISECONDS);
         } else if (myProcotol.getCmd() == MethodEnum.CLIENT_CYCLE_SENG_MESSAGE.getCode()) {   //  对周期发送的包做处理
             System.out.println("receive cycle message from server.. ---- >" + myProcotol.toString());
         } else {

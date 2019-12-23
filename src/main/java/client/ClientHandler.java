@@ -26,7 +26,8 @@ public class ClientHandler extends ChannelInitializer<SocketChannel> {
         // 处理网络IO
         ch.pipeline().addLast(new SimpleClientHandler());
         ch.pipeline().addLast(new ShakeHandClientHandler());
-//        ch.pipeline().addLast(new CycleSendClientHandler());
-        System.out.println(ch.pipeline());
+        ch.pipeline().addLast(new CycleSendClientHandler());
+
+        System.out.println();
     }
 }

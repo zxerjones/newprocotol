@@ -8,7 +8,7 @@ import protocol.MyProcotol;
 
 /**
  * @ClassName CycleSendServerHandler
- * @Description TODO
+ * @Description 周期发送请求包
  * @Author zhengxin
  * @Date 2019/12/23 18:58
  */

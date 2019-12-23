@@ -28,7 +28,7 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
         // 处理网络IO
         ch.pipeline().addLast(new ShakeHandServerHandler());
         ch.pipeline().addLast(new SimpleServerHandler());
-//        ch.pipeline().addLast(new CycleSendServerHandler());
-
+        ch.pipeline().addLast(new CycleSendServerHandler());
+        System.out.println(ch.pipeline());
     }
 }

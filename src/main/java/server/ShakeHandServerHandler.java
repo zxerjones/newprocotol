@@ -31,9 +31,9 @@ public class ShakeHandServerHandler extends ChannelInboundHandlerAdapter {
         MyProcotol myProcotol = new MyProcotol();
         myProcotol.setHeader(Constant.HEADER);
         myProcotol.setVersion(Constant.VERSION);
-        myProcotol.setCmd(MethodEnum.SHAKE_HAND.getCode());
+        myProcotol.setCmd(MethodEnum.SHAKE_HEAD_RESP.getCode());
         myProcotol.setCode(Constant.CODE);
-        myProcotol.setContent("我是握手请求响应");
+        myProcotol.setContent("response of shake hand...");
         myProcotol.setContentLength(myProcotol.getContent().getBytes().length);
         return myProcotol;
     }

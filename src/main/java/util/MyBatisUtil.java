@@ -34,10 +34,6 @@ public class MyBatisUtil {
         return sqlSessionFactory.openSession();
     }
 
-    public static void main(String[] args) {
-       long header = 140;
-        System.out.println(Long.toHexString(140));
-    }
     /**
      * 关闭资源
      */

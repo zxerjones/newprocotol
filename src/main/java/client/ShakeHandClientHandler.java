@@ -25,7 +25,11 @@ public class ShakeHandClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("客户端握手接收结果.."+ ((MyProcotol)msg).toString());
+        MyProcotol myProcotol = (MyProcotol) msg;
+        if (myProcotol.getCmd() == MethodEnum.SHAKE_HEAD_RESP.getCode()) {
+            System.out.println("客户端握手接收结果.." + ((MyProcotol) msg).toString());
+
+        }
         //  不做任何处理，直接透传
         ctx.fireChannelRead(msg);
     }
@@ -37,7 +41,7 @@ public class ShakeHandClientHandler extends ChannelInboundHandlerAdapter {
         myProcotol.setVersion(Constant.VERSION);
         myProcotol.setCmd(MethodEnum.SHAKE_HAND.getCode());
         myProcotol.setCode(Constant.CODE);
-        myProcotol.setContent("我是握手请求");
+        myProcotol.setContent("request of shake hand...");
         myProcotol.setContentLength(myProcotol.getContent().getBytes(Charset.defaultCharset()).length);
         return myProcotol;
     }

@@ -6,7 +6,8 @@ public enum MethodEnum {
     SERVER_DATA_TO_CLIENT(0x11, "服务端封装数据发送到客户端"),
     CLIENT_DATA_SAVE_IN_DB(0x12, "客户端发送数据保存到服务端"),
     CLIENT_CYCLE_SENG_MESSAGE(0x13, "客户端周期向服务端发送请求"),
-    SHAKE_HAND(0x14, "客户端服务端握手");
+    SHAKE_HAND(0x14, "客户端服务端握手"),
+    SHAKE_HEAD_RESP(0x15, "服务端对握手的响应");
 
     private int code;
     private String des;

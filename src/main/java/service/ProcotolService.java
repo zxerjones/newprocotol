@@ -59,7 +59,7 @@ public class ProcotolService {
                 // 插入异常，保存用户uid
                 return e.getUid();
             }
-            return "";
+            return null;
         }).collect(Collectors.toList());
         // 关闭sqlsession
         MyBatisUtil.close(threadLocal.get());

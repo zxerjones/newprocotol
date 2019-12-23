@@ -32,7 +32,6 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
         String content = JSON.toJSONString(buildContent());
         procotol.setContent(content);
         procotol.setContentLength(content.getBytes().length);
-        System.out.println(procotol);
         ctx.writeAndFlush(procotol);
     }
 
@@ -43,7 +42,7 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
     private List<Student> buildContent() {
         String baseName = "zxerjones";
         List<Student> list = new ArrayList<>();
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 10; i++) {
             Student student = new Student(getUid(), baseName + i, 24 + i, "coder " + i);
             list.add(student);
         }
@@ -73,4 +72,6 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
         cause.printStackTrace();
         ctx.close();
     }
+
+
 }

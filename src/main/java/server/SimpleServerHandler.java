@@ -29,7 +29,7 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
 
             respPro.setContentLength(response.getBytes().length);
             respPro.setContent(response);
-            ctx.writeAndFlush(response);
+            ctx.writeAndFlush(respPro);
         } else {
             // 透传
             ctx.fireChannelRead(msg);
