@@ -15,20 +15,27 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         MyProcotol myProcotol = (MyProcotol) msg;
-        System.out.println("server receive msg from client : " + myProcotol.toString());
-        MyProcotol respPro = new MyProcotol();
-        respPro.setHeader(myProcotol.getHeader());
-        respPro.setVersion(myProcotol.getVersion());
-        respPro.setCmd(myProcotol.getCmd());
-        respPro.setCode(myProcotol.getCode());
-        respPro.setEncryp(EncrypEnum.code);
+        if (myProcotol.getCmd() == MethodEnum.CLIENT_DATA_SAVE_IN_DB.getCode()) {
+            System.out.println("server receive msg from client : " + myProcotol.toString());
+            MyProcotol respPro = new MyProcotol();
+            respPro.setHeader(myProcotol.getHeader());
+            respPro.setVersion(myProcotol.getVersion());
+            respPro.setCmd(myProcotol.getCmd());
+            respPro.setCode(myProcotol.getCode());
+            respPro.setEncryp(EncrypEnum.code);
 
-        // 做具体的业务处理，保存数据或者向客户端推送数据
-        String response = doWorkByCmd(myProcotol);
+            // 做具体的业务处理，保存数据或者向客户端推送数据
+            String response = doWorkByCmd(myProcotol);
 
-        respPro.setContentLength(response.getBytes().length);
-        respPro.setContent(response);
-        ctx.writeAndFlush(response);
+            respPro.setContentLength(response.getBytes().length);
+            respPro.setContent(response);
+            ctx.writeAndFlush(response);
+        } else {
+            // 透传
+            ctx.fireChannelRead(msg);
+        }
+
+
     }
 
     /**
@@ -45,16 +52,7 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
      */
     private String doWorkByCmd(MyProcotol myProcotol) {
         // 客户端发送数据保存到服务端
-
-        if (MethodEnum.CLIENT_DATA_SAVE_IN_DB.getCode() == myProcotol.getCmd()) {
             return saveResult(myProcotol.getContent());
-        }
-
-        // 服务端数据发送给客户
-        if (MethodEnum.SERVER_DATA_TO_CLIENT.getCode() == myProcotol.getCmd()) {
-            return sendResult();
-        }
-        return "Not find method from cmd";
     }
 
     private String sendResult() {

@@ -18,12 +18,15 @@ public class ClientHandler extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline().addLast(new MyEncoder());
-        ch.pipeline().addLast(new MyDecoder());
         ch.pipeline().addLast(new ProcotolDecoder(10240, 13, 8));
+        ch.pipeline().addLast(new MyDecoder());
 //        ch.pipeline().addLast(new ProcotolDecoder(2048, 13, 4));
 //        ch.pipeline().addLast(new LineBasedFrameDecoder(10240));
 //        ch.pipeline().addLast(new StringDecoder(Charset.defaultCharset()));
         // 处理网络IO
         ch.pipeline().addLast(new SimpleClientHandler());
+        ch.pipeline().addLast(new ShakeHandClientHandler());
+//        ch.pipeline().addLast(new CycleSendClientHandler());
+        System.out.println(ch.pipeline());
     }
 }

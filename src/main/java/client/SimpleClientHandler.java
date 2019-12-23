@@ -61,12 +61,16 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         MyProcotol procotol = (MyProcotol) msg;
-        System.out.println("客户端收到服务端的信息:" + procotol.toString());
-        ReferenceCountUtil.release(msg);
+        if (procotol.getCmd() == MethodEnum.CLIENT_DATA_SAVE_IN_DB.getCode()) {
+            System.out.println("客户端收到服务端保存数据的响应:" + procotol.toString());
+        } else {
+            ctx.fireChannelRead(msg);
+        }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
         ctx.close();
     }
 }

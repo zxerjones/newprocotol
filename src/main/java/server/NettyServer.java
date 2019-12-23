@@ -22,11 +22,12 @@ public class NettyServer {
             // 服务器辅助启动类配置
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.INFO))
-                    .option(ChannelOption.SO_BACKLOG, 20480) // 设置tcp缓冲区
-                    .option(ChannelOption.SO_RCVBUF, 1024*1024*64)	// 设置接受数据的缓存大小
-                    .option(ChannelOption.SO_KEEPALIVE, true)
+                    .channel(NioServerSocketChannel.class)	//设置NIO的模式
+                    .option(ChannelOption.SO_BACKLOG, 1024)	//设置TCP缓冲区
+                    .option(ChannelOption.SO_SNDBUF, 32*1024)	// 设置发送数据的缓存大小
+                    .option(ChannelOption.SO_RCVBUF, 32*1024)	// 设置接受数据的缓存大小
+                    .childOption(ChannelOption.SO_KEEPALIVE, Boolean.TRUE)	// 设置保持连接
+                    .childOption(ChannelOption.SO_SNDBUF, 32*1024)
                     .childHandler(new ServerHandler());
             // 绑定端口，同步等待绑定成功
             ChannelFuture f = b.bind(8888).sync();

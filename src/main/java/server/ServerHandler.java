@@ -21,11 +21,14 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
         // 添加自定义协议编码工具
         ch.pipeline().addLast(new MyEncoder());
 
-        // 解决发送sjon不完整的问题
+        // 解决发送json不完整的问题
         ch.pipeline().addLast(new ProcotolDecoder(10240, 13, 8));
         ch.pipeline().addLast(new MyDecoder());
 //        ch.pipeline().addLast(new MyDecoder());
         // 处理网络IO
+        ch.pipeline().addLast(new ShakeHandServerHandler());
         ch.pipeline().addLast(new SimpleServerHandler());
+//        ch.pipeline().addLast(new CycleSendServerHandler());
+
     }
 }
